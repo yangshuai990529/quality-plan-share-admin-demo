@@ -29,55 +29,55 @@ const groups = [
 
 const users = [
   {
-    id: 'U100238', deviceId: 'TV-A10238', model: '75Q10K',
+    id: 'DEMO-USER-001', deviceId: 'DEMO-TV-001', model: '75Q10K',
     plans: [
-      { id: 'p-100238-1', name: '客厅电影模式', code: '8F3K2P7Q', signal: 'HDR10', effect: '电影', status: 'valid', created: '2026-08-25 18:32:15', updated: '2026-08-25 20:15:30', usage: [18, 12, 7], snapshot: true },
-      { id: 'p-100238-2', name: '周末观影', code: '5A9D1M6X', signal: '杜比视界', effect: '影院', status: 'valid', created: '2026-08-24 15:10:42', updated: '2026-08-25 19:08:11', usage: [10, 8, 3], snapshot: true },
-      { id: 'p-100238-3', name: '游戏低延迟', code: 'Q7B4N2E8', signal: 'HDMI', effect: '游戏', status: 'valid', created: '2026-08-23 21:04:26', updated: '2026-08-24 22:16:05', usage: [24, 18, 16], snapshot: true },
-      { id: 'p-100238-4', name: '足球赛事', code: '3C8V6R1T', signal: 'SDR', effect: '运动', status: 'valid', created: '2026-08-21 09:23:10', updated: '2026-08-22 18:47:26', usage: [8, 6, 4], snapshot: true },
+      { id: 'p-100238-1', name: '客厅电影模式', code: 'A1B2C3D4', signal: 'HDR10', effect: '电影', status: 'valid', created: '2026-08-25 18:32:15', updated: '2026-08-25 20:15:30', usage: [18, 12, 7], snapshot: true },
+      { id: 'p-100238-2', name: '周末观影', code: 'E5F6G7H8', signal: '杜比视界', effect: '影院', status: 'valid', created: '2026-08-24 15:10:42', updated: '2026-08-25 19:08:11', usage: [10, 8, 3], snapshot: true },
+      { id: 'p-100238-3', name: '游戏低延迟', code: 'J1K2L3M4', signal: 'HDMI', effect: '游戏', status: 'valid', created: '2026-08-23 21:04:26', updated: '2026-08-24 22:16:05', usage: [24, 18, 16], snapshot: true },
+      { id: 'p-100238-4', name: '足球赛事', code: 'N5P6Q7R8', signal: 'SDR', effect: '运动', status: 'valid', created: '2026-08-21 09:23:10', updated: '2026-08-22 18:47:26', usage: [8, 6, 4], snapshot: true },
       { id: 'p-100238-5', name: '明亮客厅', code: '-', signal: 'SDR', effect: '标准', status: 'none', created: '2026-08-19 11:20:08', updated: '2026-08-19 11:20:08', usage: [0, 0, 0], snapshot: false },
-      { id: 'p-100238-6', name: '夜间护眼', code: '6L2H8W4S', signal: 'HDR10+', effect: '护眼', status: 'expired', created: '2026-08-17 20:33:57', updated: '2026-08-18 09:15:43', usage: [6, 2, 0], snapshot: false }
+      { id: 'p-100238-6', name: '夜间护眼', code: 'S9T1U2V3', signal: 'HDR10+', effect: '护眼', status: 'expired', created: '2026-08-17 20:33:57', updated: '2026-08-18 09:15:43', usage: [6, 2, 0], snapshot: false }
     ]
   },
   {
-    id: 'U100176', deviceId: 'TV-B50176', model: '65C11',
+    id: 'DEMO-USER-002', deviceId: 'DEMO-TV-002', model: '65C11',
     plans: [
-      { id: 'p-100176-1', name: '默认影院', code: '2P8J4K6M', signal: 'HDR10', effect: '电影', status: 'valid', created: '2026-08-24 14:12:06', updated: '2026-08-24 14:36:28', usage: [12, 9, 5], snapshot: true },
-      { id: 'p-100176-2', name: 'PS5游戏', code: '9N3F7T2A', signal: 'HDMI', effect: '游戏', status: 'valid', created: '2026-08-23 20:44:19', updated: '2026-08-24 11:05:47', usage: [15, 10, 8], snapshot: true },
+      { id: 'p-100176-1', name: '默认影院', code: 'W4X5Y6Z7', signal: 'HDR10', effect: '电影', status: 'valid', created: '2026-08-24 14:12:06', updated: '2026-08-24 14:36:28', usage: [12, 9, 5], snapshot: true },
+      { id: 'p-100176-2', name: 'PS5游戏', code: 'B8C9D1E2', signal: 'HDMI', effect: '游戏', status: 'valid', created: '2026-08-23 20:44:19', updated: '2026-08-24 11:05:47', usage: [15, 10, 8], snapshot: true },
       { id: 'p-100176-3', name: '电视直播', code: '-', signal: 'SDR', effect: '标准', status: 'none', created: '2026-08-20 18:02:31', updated: '2026-08-20 18:02:31', usage: [0, 0, 0], snapshot: false }
     ]
   },
   {
-    id: 'U100091', deviceId: 'TV-C20091', model: '98T7K',
+    id: 'DEMO-USER-003', deviceId: 'DEMO-TV-003', model: '98T7K',
     plans: [
-      { id: 'p-100091-1', name: '大屏影院', code: '4H6X9C2R', signal: '杜比视界', effect: '影院', status: 'valid', created: '2026-08-22 16:08:42', updated: '2026-08-23 10:16:50', usage: [22, 14, 9], snapshot: true },
-      { id: 'p-100091-2', name: '体育模式', code: '7K1Q5V8B', signal: 'SDR', effect: '运动', status: 'valid', created: '2026-08-20 12:28:54', updated: '2026-08-20 12:28:54', usage: [9, 7, 5], snapshot: true },
-      { id: 'p-100091-3', name: '老方案备份', code: '1D5M8S3P', signal: 'HDR10', effect: '标准', status: 'expired', created: '2026-08-15 09:42:18', updated: '2026-08-16 15:17:39', usage: [4, 3, 1], snapshot: false },
+      { id: 'p-100091-1', name: '大屏影院', code: 'F3G4H5J6', signal: '杜比视界', effect: '影院', status: 'valid', created: '2026-08-22 16:08:42', updated: '2026-08-23 10:16:50', usage: [22, 14, 9], snapshot: true },
+      { id: 'p-100091-2', name: '体育模式', code: 'K7L8M9N1', signal: 'SDR', effect: '运动', status: 'valid', created: '2026-08-20 12:28:54', updated: '2026-08-20 12:28:54', usage: [9, 7, 5], snapshot: true },
+      { id: 'p-100091-3', name: '老方案备份', code: 'P2Q3R4S5', signal: 'HDR10', effect: '标准', status: 'expired', created: '2026-08-15 09:42:18', updated: '2026-08-16 15:17:39', usage: [4, 3, 1], snapshot: false },
       { id: 'p-100091-4', name: '护眼阅读', code: '-', signal: 'SDR', effect: '护眼', status: 'none', created: '2026-08-12 21:04:16', updated: '2026-08-12 21:04:16', usage: [0, 0, 0], snapshot: false }
     ]
   },
   {
-    id: 'U099812', deviceId: 'TV-A99812', model: '85Q9',
+    id: 'DEMO-USER-004', deviceId: 'DEMO-TV-004', model: '85Q9',
     plans: [
-      { id: 'p-099812-1', name: '家庭通用', code: '8R2E6L9N', signal: 'SDR', effect: '标准', status: 'valid', created: '2026-08-18 17:25:06', updated: '2026-08-19 08:12:45', usage: [5, 4, 2], snapshot: true },
+      { id: 'p-099812-1', name: '家庭通用', code: 'T6U7V8W9', signal: 'SDR', effect: '标准', status: 'valid', created: '2026-08-18 17:25:06', updated: '2026-08-19 08:12:45', usage: [5, 4, 2], snapshot: true },
       { id: 'p-099812-2', name: '主机游戏', code: '-', signal: 'HDMI', effect: '游戏', status: 'none', created: '2026-08-16 22:17:51', updated: '2026-08-16 22:17:51', usage: [0, 0, 0], snapshot: false }
     ]
   },
   {
-    id: 'U098574', deviceId: 'TV-D18574', model: '55V6',
+    id: 'DEMO-USER-005', deviceId: 'DEMO-TV-005', model: '55V6',
     plans: [
-      { id: 'p-098574-1', name: '卧室观影', code: '3T7W1Q5F', signal: 'HDR10', effect: '电影', status: 'valid', created: '2026-08-17 10:05:19', updated: '2026-08-17 10:05:19', usage: [7, 5, 3], snapshot: true }
+      { id: 'p-098574-1', name: '卧室观影', code: 'X1Y2Z3A4', signal: 'HDR10', effect: '电影', status: 'valid', created: '2026-08-17 10:05:19', updated: '2026-08-17 10:05:19', usage: [7, 5, 3], snapshot: true }
     ]
   }
 ];
 
 const usageRecords = [
-  ['2026-08-25 20:15:30', 'TV-A10238', '应用', '成功', 'HDR10', '电影'],
-  ['2026-08-25 20:12:18', 'TV-A20561', '保存', '成功', 'HDR10', '电影'],
-  ['2026-08-25 20:11:50', 'TV-A20561', '查询', '成功', 'HDR10', '电影'],
-  ['2026-08-25 19:48:07', 'TV-B67120', '应用', '失败', 'HDR10', '电影'],
-  ['2026-08-25 19:47:55', 'TV-B67120', '查询', '成功', 'HDR10', '电影'],
-  ['2026-08-25 18:50:24', 'TV-A10238', '保存', '成功', 'HDR10', '电影']
+  ['2026-08-25 20:15:30', 'DEMO-TV-001', '应用', '成功', 'HDR10', '电影'],
+  ['2026-08-25 20:12:18', 'DEMO-TV-006', '保存', '成功', 'HDR10', '电影'],
+  ['2026-08-25 20:11:50', 'DEMO-TV-006', '查询', '成功', 'HDR10', '电影'],
+  ['2026-08-25 19:48:07', 'DEMO-TV-007', '应用', '失败', 'HDR10', '电影'],
+  ['2026-08-25 19:47:55', 'DEMO-TV-007', '查询', '成功', 'HDR10', '电影'],
+  ['2026-08-25 18:50:24', 'DEMO-TV-001', '保存', '成功', 'HDR10', '电影']
 ];
 
 const state = { view: 'users', userId: null, planId: null, keyword: '', device: '', model: '', count: '', date: '' };
@@ -107,7 +107,7 @@ function maskUserId(id) {
 
 function layout(content) {
   return `<div class="shell">
-    <header class="topbar"><div class="brand"><span class="brand-mark"></span><span>用户反馈管理系统</span></div><div class="top-actions"><span class="top-icon">${icon('home')}</span><span class="avatar">杨</span><span class="user-name">杨坤</span></div></header>
+    <header class="topbar"><div class="brand"><span class="brand-mark"></span><span>用户反馈管理系统</span></div><div class="top-actions"><span class="top-icon">${icon('home')}</span><span class="avatar">D</span><span class="user-name">Demo管理员</span></div></header>
     <div class="body"><aside class="sidebar">
       ${navItem('manual', '使用手册')} ${navItem('setting', '全局配置')} ${navItem('publish', '发布集管理')}
       ${navItem('nps', 'NPS新机自动化', true)} ${navItem('nps', 'NPS专项', true)} ${navItem('issue', '问题管理', true)} ${navItem('error', '错误码&解决方案管...', true)} ${navItem('entry', '跳转入口管理', true)} ${navItem('log', '日志获取参数配置')} ${navItem('device', '设备信息发布管理')} ${navItem('device', '设备信息内容管理')} ${navItem('feedback', '意见反馈管理')}

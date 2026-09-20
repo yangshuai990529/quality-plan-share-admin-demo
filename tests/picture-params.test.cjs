@@ -33,10 +33,10 @@ test('seven groups and the four regular grids exactly match the reference', () =
       ['自然光', '动态'], ['智能局域控光', '开'], ['暗部细节', '关']
     ],
     color: [
-      ['饱和度', '66'], ['色调', '57'], ['蓝电平延申', '关'], ['色温', '暖/3'], ['环境色温感应', '关'], ['色彩增强', '蓝色/2']
+      ['饱和度', '66'], ['色调', '57'], ['色温', '暖/3'], ['环境色温感应', '关'], ['色彩增强', '蓝色/2']
     ],
     motion: [
-      ['运动补偿', '自定义/运动平滑/7'], ['120/240hz动态加速', '开'], ['LED 运动清晰', '关'], ['24P原帧电影', '开']
+      ['运动补偿', '自定义/运动平滑/7'], ['24P原帧电影', '开']
     ],
     sharpness: [
       ['锐利度', '56'], ['水印平滑', '低'], ['MPEG降噪', '中'], ['降噪', '开'], ['超清分辨率', '开'], ['精准细节', '开']
@@ -75,20 +75,28 @@ test('20-point white balance retains all 20 stages and 60 RGB values in order', 
   assert.ok(api.renderWhiteBalance().includes('tabindex="0" role="region"'));
 });
 
-test('color space has six colors in the pictured three-column order and all 18 values', () => {
-  const names = ['红色', '黄色', '青色', '绿色', '蓝色', '紫色'];
-  assert.deepEqual(plain(api.params.colorSpace).map(item => item[0]), names);
-  for (const [, channels] of api.params.colorSpace) assert.deepEqual(plain(channels), [['红', '50'], ['绿', '30'], ['蓝', '36']]);
+test('color space matches the pictured six-column matrix and all 18 values', () => {
+  assert.deepEqual(plain(api.params.colorSpace), {
+    columns: ['红色', '绿色', '蓝色', '青色', '紫色', '黄色'],
+    rows: [
+      ['红色', ['50', '50', '50', '50', '50', '50']],
+      ['绿色', ['50', '50', '50', '50', '50', '50']],
+      ['蓝色', ['50', '50', '50', '50', '50', '50']]
+    ]
+  });
   const html = api.renderColorSpace();
-  assert.equal((html.match(/class="color-space-item"/g) || []).length, 6);
-  assert.equal((html.match(/class="param-value"/g) || []).length, 18);
+  assert.deepEqual(cells(rows(html)[0]), ['色彩空间', '自定义', '', '红色', '绿色', '蓝色', '青色', '紫色', '黄色']);
+  assert.deepEqual(cells(rows(html)[1]), ['红色', '50', '50', '50', '50', '50', '50']);
+  assert.deepEqual(cells(rows(html)[2]), ['绿色', '50', '50', '50', '50', '50', '50']);
+  assert.deepEqual(cells(rows(html)[3]), ['蓝色', '50', '50', '50', '50', '50', '50']);
+  assert.equal((html.match(/rowspan="4"/g) || []).length, 2);
 });
 
 test('other settings retain general controls, display-standard path and eye-care group', () => {
   assert.deepEqual(plain(api.params.other), {
     general: [['信号范围', '自动'], ['内容自动识别', '开']],
     displayStandard: ['显示标准', '自定义/片源OETF/2.6'],
-    eyeCare: [['背光调节', '混合调光'], ['环境亮度感应', '开'], ['低蓝光模式', '开']]
+    eyeCare: [['环境亮度感应', '开']]
   });
   assert.ok(api.renderPictureParameters().includes('<h4 class="param-subtitle">健康护眼</h4>'));
 });
@@ -121,17 +129,24 @@ test('all 16 detail pages contain only the summary and full parameter panel', ()
 });
 
 test('previous homepage and plan-list requests remain intact', () => {
-  assert.ok(!api.renderUsers().includes('filter-count'));
+  const usersHtml = api.renderUsers();
+  assert.ok(!usersHtml.includes('filter-count'));
+  assert.deepEqual(cells(rows(usersHtml)[0]), ['Client Type', '机型', '方案总数', '有效分享数', '失效分享数', '最近创建时间', '操作']);
+  assert.ok(usersHtml.includes('<label>Client Type：</label>'));
   for (const user of api.users) {
     const html = api.renderPlans(user);
     assert.deepEqual(cells(rows(html)[0]), ['方案名称', '分享码', '信源', '信号类型', '图效', '分享状态', '创建时间', '查询次数', '保存使用次数', '操作']);
   }
 });
 
-test('layout keeps five-column groups, a scrollable 20-point matrix, and three-column color space', () => {
+test('layout uses card-based parameter groups and scrollable calibration matrices', () => {
   const css = fs.readFileSync(path.join(root, 'styles.css'), 'utf8');
   assert.match(css, /\.param-grid\s*\{[^}]*grid-template-columns: repeat\(5, minmax\(0, 1fr\)\)/);
-  assert.match(css, /\.color-space-grid\s*\{[^}]*grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/);
+  assert.match(css, /\.color-space-table\s*\{[^}]*min-width: 760px/);
   assert.match(css, /\.white-balance-matrix-wrap\s*\{[^}]*overflow-x: auto/);
-  assert.match(css, /\.param-item\s*\{[^}]*flex-wrap: wrap/);
+  assert.match(css, /\.color-space-table-wrap\s*\{[^}]*overflow-x: auto/);
+  assert.match(css, /\.param-section\s*\{[^}]*border-radius: 10px/);
+  assert.match(css, /\.param-item\s*\{[^}]*border-radius: 7px/);
+  assert.match(css, /\.white-balance-matrix\sth:first-child\s*\{[^}]*position: sticky/);
+  assert.match(css, /@media \(max-width: 1080px\)[\s\S]*\.param-grid\s*\{[^}]*repeat\(3,/);
 });

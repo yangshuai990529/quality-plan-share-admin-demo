@@ -7,11 +7,11 @@ const params = {
     ['自然光', '动态'], ['智能局域控光', '开'], ['暗部细节', '关']
   ],
   color: [
-    ['饱和度', '66'], ['色调', '57'], ['蓝电平延申', '关'], ['色温', '暖/3'], ['环境色温感应', '关'],
+    ['饱和度', '66'], ['色调', '57'], ['色温', '暖/3'], ['环境色温感应', '关'],
     ['色彩增强', '蓝色/2']
   ],
   motion: [
-    ['运动补偿', '自定义/运动平滑/7'], ['120/240hz动态加速', '开'], ['LED 运动清晰', '关'], ['24P原帧电影', '开']
+    ['运动补偿', '自定义/运动平滑/7'], ['24P原帧电影', '开']
   ],
   sharpness: [
     ['锐利度', '56'], ['水印平滑', '低'], ['MPEG降噪', '中'], ['降噪', '开'], ['超清分辨率', '开'],
@@ -35,18 +35,18 @@ const params = {
       ]
     }
   },
-  colorSpace: [
-    ['红色', [['红', '50'], ['绿', '30'], ['蓝', '36']]],
-    ['黄色', [['红', '50'], ['绿', '30'], ['蓝', '36']]],
-    ['青色', [['红', '50'], ['绿', '30'], ['蓝', '36']]],
-    ['绿色', [['红', '50'], ['绿', '30'], ['蓝', '36']]],
-    ['蓝色', [['红', '50'], ['绿', '30'], ['蓝', '36']]],
-    ['紫色', [['红', '50'], ['绿', '30'], ['蓝', '36']]]
-  ],
+  colorSpace: {
+    columns: ['红色', '绿色', '蓝色', '青色', '紫色', '黄色'],
+    rows: [
+      ['红色', ['50', '50', '50', '50', '50', '50']],
+      ['绿色', ['50', '50', '50', '50', '50', '50']],
+      ['蓝色', ['50', '50', '50', '50', '50', '50']]
+    ]
+  },
   other: {
     general: [['信号范围', '自动'], ['内容自动识别', '开']],
     displayStandard: ['显示标准', '自定义/片源OETF/2.6'],
-    eyeCare: [['背光调节', '混合调光'], ['环境亮度感应', '开'], ['低蓝光模式', '开']]
+    eyeCare: [['环境亮度感应', '开']]
   }
 };
 
@@ -150,15 +150,15 @@ function renderUsers() {
     return (!state.device || user.deviceId.includes(state.device)) && (!state.model || user.model.includes(state.model)) && (!state.date || latestUpdated === state.date);
   });
   return pageHead([]) + `<section class="card search-card"><div class="search-grid">
-    <div class="form-item"><label>设备 ID：</label><input id="filter-device" class="control" placeholder="请输入" value="${esc(state.device)}"></div>
+    <div class="form-item"><label>Client Type：</label><input id="filter-device" class="control" placeholder="请输入" value="${esc(state.device)}"></div>
     <div class="form-item"><label>机型：</label><input id="filter-model" class="control" placeholder="请输入" value="${esc(state.model)}"></div>
     <div class="form-item"><label>更新时间：</label><input id="filter-date" type="date" class="control" value="${esc(state.date)}"></div>
   </div><div class="search-footer"><button class="btn" data-action="reset">重 置</button><button class="btn btn-primary" data-action="search">查 询</button><button class="collapse">收起︿</button></div></section>
-  <section class="card table-card">${toolbar()}<div class="table-wrap"><table><colgroup><col style="width:15%"><col style="width:14%"><col style="width:11%"><col style="width:11%"><col style="width:11%"><col style="width:17%"><col style="width:10%"></colgroup><thead><tr><th>设备 ID</th><th>机型</th><th>方案总数</th><th>有效分享数</th><th>失效分享数</th><th>最近创建时间</th><th>操作</th></tr></thead><tbody>${filtered.map(user => { const stats=userStats(user); return `<tr><td>${user.deviceId}</td><td>${user.model}</td><td>${stats.total}</td><td><span class="status status-valid">${stats.valid}</span></td><td><span class="status status-expired">${stats.expired}</span></td><td>${latestPlan(user,'created')}</td><td><button class="link" data-user="${user.id}">查看方案</button></td></tr>`; }).join('') || '<tr><td colspan="7"><div class="notice">暂无符合条件的用户</div></td></tr>'}</tbody></table></div><div class="pagination"><span>第 1-20 条/总共 ${filtered.length} 条</span><span>‹</span><span class="page-number active">1</span><span>›</span><select class="page-size"><option>20 条/页</option></select></div></section>`;
+  <section class="card table-card">${toolbar()}<div class="table-wrap"><table><colgroup><col style="width:15%"><col style="width:14%"><col style="width:11%"><col style="width:11%"><col style="width:11%"><col style="width:17%"><col style="width:10%"></colgroup><thead><tr><th>Client Type</th><th>机型</th><th>方案总数</th><th>有效分享数</th><th>失效分享数</th><th>最近创建时间</th><th>操作</th></tr></thead><tbody>${filtered.map(user => { const stats=userStats(user); return `<tr><td>${user.deviceId}</td><td>${user.model}</td><td>${stats.total}</td><td><span class="status status-valid">${stats.valid}</span></td><td><span class="status status-expired">${stats.expired}</span></td><td>${latestPlan(user,'created')}</td><td><button class="link" data-user="${user.id}">查看方案</button></td></tr>`; }).join('') || '<tr><td colspan="7"><div class="notice">暂无符合条件的用户</div></td></tr>'}</tbody></table></div><div class="pagination"><span>第 1-20 条/总共 ${filtered.length} 条</span><span>‹</span><span class="page-number active">1</span><span>›</span><select class="page-size"><option>20 条/页</option></select></div></section>`;
 }
 function renderPlans(user) {
   const visiblePlans = user.plans.filter(plan => plan.status !== 'none');
-  return pageHead([{label:'用户列表'},{label:'方案管理', current:true}]) + `<section class="card user-summary">${summaryCell('设备 ID', user.deviceId)}${summaryCell('机型', user.model)}${summaryCell('方案总数', visiblePlans.length)}</section><section class="card table-card"><div class="sub-head"><div class="sub-title">该用户分享的所有方案</div><button class="back-link" data-action="back-users">${icon('back')} 返回用户列表</button></div>${toolbar()}<div class="table-wrap"><table class="plan-table"><colgroup><col style="width:16%"><col style="width:10%"><col style="width:8%"><col style="width:9%"><col style="width:8%"><col style="width:9%"><col style="width:16%"><col style="width:8%"><col style="width:9%"><col style="width:7%"></colgroup><thead><tr><th>方案名称</th><th>分享码</th><th>信源</th><th>信号类型</th><th>图效</th><th>分享状态</th><th>创建时间</th><th>查询次数</th><th>保存使用次数</th><th>操作</th></tr></thead><tbody>${visiblePlans.map(plan => `<tr><td title="${esc(plan.name)}">${esc(plan.name)}</td><td>${plan.code}</td><td>${esc(plan.inputSource || '-')}</td><td>${plan.signal}</td><td>${plan.effect}</td><td>${statusBadge(plan.status)}</td><td>${plan.created}</td><td>${plan.usage[0]}</td><td>${plan.usage[1]}</td><td><button class="link" data-plan="${plan.id}">查看详情</button></td></tr>`).join('')}</tbody></table></div><div class="pagination"><span>第 1-${visiblePlans.length} 条/总共 ${visiblePlans.length} 条</span><span>‹</span><span class="page-number active">1</span><span>›</span><select class="page-size"><option>20 条/页</option></select></div></section>`;
+  return pageHead([{label:'用户列表'},{label:'方案管理', current:true}]) + `<section class="card user-summary">${summaryCell('Client Type', user.deviceId)}${summaryCell('机型', user.model)}${summaryCell('方案总数', visiblePlans.length)}</section><section class="card table-card"><div class="sub-head"><div class="sub-title">该用户分享的所有方案</div><button class="back-link" data-action="back-users">${icon('back')} 返回用户列表</button></div>${toolbar()}<div class="table-wrap"><table class="plan-table"><colgroup><col style="width:16%"><col style="width:10%"><col style="width:8%"><col style="width:9%"><col style="width:8%"><col style="width:9%"><col style="width:16%"><col style="width:8%"><col style="width:9%"><col style="width:7%"></colgroup><thead><tr><th>方案名称</th><th>分享码</th><th>信源</th><th>信号类型</th><th>图效</th><th>分享状态</th><th>创建时间</th><th>查询次数</th><th>保存使用次数</th><th>操作</th></tr></thead><tbody>${visiblePlans.map(plan => `<tr><td title="${esc(plan.name)}">${esc(plan.name)}</td><td>${plan.code}</td><td>${esc(plan.inputSource || '-')}</td><td>${plan.signal}</td><td>${plan.effect}</td><td>${statusBadge(plan.status)}</td><td>${plan.created}</td><td>${plan.usage[0]}</td><td>${plan.usage[1]}</td><td><button class="link" data-plan="${plan.id}">查看详情</button></td></tr>`).join('')}</tbody></table></div><div class="pagination"><span>第 1-${visiblePlans.length} 条/总共 ${visiblePlans.length} 条</span><span>‹</span><span class="page-number active">1</span><span>›</span><select class="page-size"><option>20 条/页</option></select></div></section>`;
 }
 function summaryCell(label, value) { return `<div class="summary-cell"><div class="summary-label">${label}</div><div class="summary-value">${value}</div></div>`; }
 function renderParamItem([name, value]) {
@@ -181,7 +181,8 @@ function renderWhiteBalance() {
   </div>`;
 }
 function renderColorSpace() {
-  return `<div class="color-space-grid">${params.colorSpace.map(([name, channels]) => `<div class="color-space-item"><span class="color-space-name">${esc(name)}</span>${channels.map(renderParamItem).join('')}</div>`).join('')}</div>`;
+  const { columns, rows } = params.colorSpace;
+  return `<div class="color-space-table-wrap"><table class="color-space-table"><tbody><tr><th rowspan="4" scope="rowgroup">色彩空间</th><th rowspan="4" scope="rowgroup">自定义</th><th scope="col"></th>${columns.map(column => `<th scope="col">${esc(column)}</th>`).join('')}</tr>${rows.map(([name, values]) => `<tr><th scope="row">${esc(name)}</th>${values.map(value => `<td>${esc(value)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 }
 function renderOtherParams() {
   return `<div class="other-params">
@@ -192,18 +193,18 @@ function renderOtherParams() {
 }
 function renderPictureParameters() {
   return `<section class="card detail-card picture-params" aria-labelledby="picture-params-title">
-    <div class="detail-title"><h2 id="picture-params-title">画质参数</h2><span class="muted">生成方案时保存的参数快照，仅支持查看</span></div>
+    <div class="detail-title picture-params-title"><div><span class="section-eyebrow">参数快照</span><h2 id="picture-params-title">画质参数</h2></div><span class="snapshot-note"><span class="snapshot-dot"></span>生成方案时保存 · 仅支持查看</span></div>
     ${groups.map(([key, label]) => {
       const content = key === 'whiteBalance' ? renderWhiteBalance()
         : key === 'colorSpace' ? renderColorSpace()
         : key === 'other' ? renderOtherParams()
         : `<div class="param-grid">${params[key].map(renderParamItem).join('')}</div>`;
-      return `<section class="param-section" aria-labelledby="param-heading-${key}"><h3 class="param-section-head" id="param-heading-${key}">${esc(label)}</h3>${content}</section>`;
+      return `<section class="param-section param-section-${key}" aria-labelledby="param-heading-${key}"><div class="param-section-title"><span class="param-section-marker" aria-hidden="true"></span><h3 class="param-section-head" id="param-heading-${key}">${esc(label)}</h3></div>${content}</section>`;
     }).join('')}
   </section>`;
 }
 function renderPlan(user, plan) {
-  return pageHead([{label:'用户列表'},{label:'方案管理'},{label:plan.name, current:true}]) + `<section class="card detail-card"><div class="detail-title"><h2>方案详情 <span class="muted">/ ${esc(plan.name)}</span></h2><button class="back-link" data-action="back-plans">${icon('back')} 返回方案列表</button></div><div class="info-grid">
+  return pageHead([{label:'用户列表'},{label:'方案管理'},{label:plan.name, current:true}]) + `<section class="card detail-card plan-overview"><div class="detail-title plan-overview-head"><div class="plan-heading"><span class="section-eyebrow">方案详情</span><div class="plan-title-line"><h2>${esc(plan.name)}</h2>${statusBadge(plan.status)}</div><span class="plan-caption">方案 ID · ${esc(plan.id)}</span></div><button class="back-link back-link-button" data-action="back-plans">${icon('back')} 返回方案列表</button></div><div class="info-grid">
     ${infoItem('方案名称', plan.name)}${infoItem('分享码', plan.code)}${infoItem('创建时间', plan.created)}${infoItem('信源', plan.inputSource || '-')}${infoItem('信号类型', plan.signal)}${infoItem('使用图效', plan.effect)}${infoItem('分享状态', statusBadge(plan.status), true)}
   </div></section>${renderPictureParameters()}`;
 }
